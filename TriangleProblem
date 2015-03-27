@@ -1,0 +1,42 @@
+import java.io.BufferedReader;
+	import java.io.File;
+	import java.io.FileReader;
+	import java.io.IOException;
+public class TriangleProblem {
+	        private static File file = new File("C:\\Users\\bt34683\\Desktop\\triangle.txt");
+	        private static int rows = 100;
+	        private static int[][] numbers;
+	        
+	        public static void main(String[] args) {
+	                try {
+	                        BufferedReader br = new BufferedReader(new FileReader(file));
+	                        try {
+	                                numbers = new int[rows][];
+	                                for (int i = 0; i < rows; i++) {
+	                                        numbers[i] = new int[i + 1];
+	                                        String[] line = br.readLine().split(" ");
+	                                        for (int j = 0; j <= i; j++) {
+	                                                numbers[i][j] = Integer.parseInt(line[j]);
+	                                        }
+	                                }
+	                                
+	                                // Find path from bottom up.
+	                                for (int i = rows - 2; i >= 0; i-- ) {
+	                                        // Replace numbers with the sum of itself and the bigger adjacent number.
+	                                        for (int j = 0; j <= i; j++) {
+	                                                if (numbers[i + 1][j] > numbers[i + 1][j + 1])
+	                                                        numbers[i][j] += numbers[i + 1][j];
+	                                                else
+	                                                        numbers[i][j] += numbers[i + 1][j + 1];
+	                                        }
+	                                }
+	                                System.out.println("Maximum total: " + numbers[0][0]);
+	                                
+	                        } finally {
+	                                br.close();
+	                        }
+	                } catch (IOException e) {
+	                        e.printStackTrace();
+	                }               
+	        }
+}
