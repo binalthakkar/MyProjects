@@ -1,0 +1,47 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.Scanner;
+
+
+public class SieveOfEratos {
+	private ArrayList primeNums = new ArrayList();
+public static void main(String args[]){
+	Scanner sc = new Scanner(System.in);
+	System.out.print("Please enter the limit till you want to generate Prime Numbers");
+	int limit =sc.nextInt(); // getting the input paramter for the limit till which Prime Number needs to be generated
+	sc.close(); //closing th scanner
+	SieveOfEratos primeObj = new SieveOfEratos();
+	primeObj.genPrimeNumbers(limit);
+	
+	Iterator it = primeObj.primeNums.iterator();
+	System.out.println("Printing arraylist ");
+	while(it.hasNext()){
+		System.out.println(""+it.next());
+	}
+}
+public  void genPrimeNumbers(int limit){
+	boolean[] isPrime = new boolean[limit];
+	
+	//create isPrime boolean array for storing whether the number is Prime of not
+	isPrime[0]= false; 
+	//1 is not a prime number
+	/*for (int i =1 ; i<limit; i++){
+		isPrime[i] = true;
+	}*/
+	
+	//setting the value of all the elements in the array to be true
+	Arrays.fill(isPrime, true);
+	
+	for(int i=2 ;i<=limit;i++){
+		if(isPrime[i-1]){
+			System.out.println("i is prime "+i);
+			primeNums.add(i);
+			//for(int j= i*i; j<=limit;j+=i){
+			for(int j= 2*i; j<=limit;j+=i){
+				isPrime[j-1] = false;
+			}
+		}
+	}
+}
+}
